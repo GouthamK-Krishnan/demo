@@ -203,9 +203,9 @@
                 let typeOfOperation = Math.random() > 0.5 ? "Normal" : "Reverse";
 
                 let alertLabels = `
-          PE: ${Math.random() > 0.5 ? "Yes" : "No"}<br>
-          Platform: ${Math.random() > 0.5 ? "Active" : "Inactive"}<br>
-          Unsupervised: ${Math.random() > 0.5 ? "Warning" : "Safe"}
+          PE: ${Math.random() > 0.5 ? "Anomaly" : "Normal"}<br>
+          Platform: ${Math.random() > 0.5 ? "Anomaly" : "Normal"}<br>
+          Unsupervised: ${Math.random() > 0.5 ? "Anomaly" : "Normal"}
         `;
 
                 let row = `<tr>
@@ -235,13 +235,19 @@
             document.getElementById('operation-details').style.display = 'block';
 
             // Sample data to populate the table
-            const segments = ['Operation', 'Segment 1', 'Segment 2', 'Segment 3', 'Segment 4'];
+            const segments = ['Operation', 'Start', 'Unlock', 'Travel', 'Lock'];
             const features = ['mean', 'median', 'mode'];
-            const labels = {
-                PE: Math.random() > 0.5 ? "Yes" : "No",
-                Platform: Math.random() > 0.5 ? "Active" : "Inactive",
-                Unsupervised: Math.random() > 0.5 ? "Warning" : "Safe"
-            };
+            var labels = {
+                        PE: Math.random() > 0.5 ? "Anomaly" : "Normal",
+                        Platform: Math.random() > 0.5 ? "Anomaly" : "Normal",
+                        Unsupervised: Math.random() > 0.5 ? "Anomaly" : "Normal",
+                        User_Input :"Normal"
+                    };
+                    if (labels["PE"] ==="Anomaly" || labels["PE"] ==="Anomaly" || labels["PE"] ==="Anomaly")
+                    {
+                        labels["User_Input"] = Math.random() > 0.5 ? "Anomaly" : "Normal"
+                    }
+            console.log(labels)
 
             const sampleTableBody = document.getElementById('sample-table-body');
             sampleTableBody.innerHTML = ''; // Clear existing content
@@ -249,10 +255,27 @@
             segments.forEach(segment => {
                 features.forEach((feature, index) => {
                     let featureValue = Math.random().toFixed(2); // Random feature value
+                            var labels = {
+                        PE: Math.random() > 0.5 ? "Anomaly" : "Normal",
+                        Platform: Math.random() > 0.5 ? "Anomaly" : "Normal",
+                        Unsupervised: Math.random() > 0.5 ? "Anomaly" : "Normal",
+                        User_Input :"Normal"
+                    };
+                    if (labels["PE"] ==="Anomaly" || labels["PE"] ==="Anomaly" || labels["PE"] ==="Anomaly")
+                    {
+                        labels["User_Input"] = Math.random() > 0.5 ? "Anomaly" : "Normal"
+                    }
                     // For each segment, create rows for mean, median, and mode
+                    let segVal = segment
+                    if (segment=="Operation")
+                        {segVal= segment + " "+"Level"}
+                    else{
+                        segVal = segment+" "+"Phase"
+                    }
                     let row = `<tr>
-          ${index === 0 ? `<td rowspan="3">${segment}</td>` : ''} <!-- Display segment name only once -->
-          <td>${feature}</td>
+                    
+          ${index === 0 ? `<td rowspan="3">${segVal}</td>` : ''} <!-- Display segment name only once -->
+          <td>${segment+" "+feature}</td>
           <td>${featureValue}</td>
           ${index === 0 ? `<td rowspan="3">PE: ${labels.PE}<br>Platform: ${labels.Platform}<br>Unsupervised: ${labels.Unsupervised}</td>` : ''}
         </tr>`;
